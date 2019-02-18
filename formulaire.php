@@ -15,17 +15,16 @@ include "connection.php";
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <h1>Bienvenue sur le chat, indiquez votre pseudo et votre message pour discuter.</h1>
 
-<form action="" method="post">
-    <label>Votre pseudo : </label><input id = 'pseudo' name="pseudo"><br>
-    <label>Votre message : </label><textarea id = "message" name="message"></textarea>
-    <input type="submit" name="submit" id = "envoyez" value="envoyez">
 
-</form>
+<div class ='global'>
+
+<div class ='containerChat'>
 
 <div id = 'tchat'>
 
@@ -41,9 +40,24 @@ while ($row = $result->fetch_assoc()) {
 
 }
 ?>
+</div>
+
+<div id = 'membres'>
+<p>Membres connectés</p>
 
 
 </div>
+
+</div>
+
+<form action="" method="post">
+    <label>Votre message : </label><textarea id = "message" name="message"></textarea>
+    <input type="submit" name="submit" id = "envoyez" value="envoyez">
+
+</form>
+
+</div>
+
 <script type="text/javascript" src="charger.js"></script>
 <script type="text/javascript" src="appelAjax.js"></script>
 </body>

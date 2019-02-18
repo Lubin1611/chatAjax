@@ -7,13 +7,15 @@
  */
 
 include "connection.php";
+session_start();
 
+echo $_SESSION['login'];
 
 //if(isset($_POST['submit'])){ // si on a envoyé des données avec le formulaire
 
    // if(!empty($_POST['pseudo']) AND !empty($_POST['message'])) { // si les variables ne sont pas vides
 
-        $pseudo = htmlentities($_POST['pseudo']);
+        $pseudo = $_SESSION['login'];
         $message = htmlentities($_POST['message']); // on sécurise nos données
 
 
