@@ -1,60 +1,24 @@
-function ajaxRequest() {
-    var xhttp = new XMLHttpRequest();
-
-    xhttp.onreadystatechange = function () {
-
-        if (this.readyState == 4 && this.status == 200) {
-
-            console.log("ca va");
-
-        }else{
-            console.log("Error: returned status code " + xhttp.status + " " + xhttp.statusText);
-        }
-
-    };
-
-    xhttp.open("GET", "database.php?pseudo=" + document.getElementById("pseudo").value + "&message=" + document.getElementById("message").value, true);
-
-    xhttp.send();
+$('#envoyez').click(function (e) {
+    e.preventDefault(); // on empêche le bouton d'envoyer le formulaire
 
 
-}
-
-document.getElementById('envoyez').addEventListener('click', ajaxRequest);
-
-
-function retourAjax() {
+    var pseudo = encodeURIComponent($('#pseudo').val()); // on sécurise les données
+    var message = encodeURIComponent($('#message').val());
 
 
-    setTimeout( function() {
+    if (pseudo != "" && message != "") { // on vérifie que les variables ne sont pas vides
+
+        $.ajax({
+
+            url: "database.php", // on donne l'URL du fichier de traitement
+            type: "POST", // la requête est de type POST
+            data: "pseudo=" + pseudo + "&message=" + message // et on envoie nos données
 
 
-        var xhttp = new XMLHttpRequest();
+        });
 
-        xhttp.onreadystatechange = function () {
+        $('#tchat').append("<p>" + pseudo + " dit : " + message + "</p>"); // on ajoute le message dans la zone prévue
+    }
 
-            if (this.readyState == 4 && this.status == 200) {
+});
 
-                var obj = JSON.parse(this.responseText);
-                console.log(obj.pseudo);
-                var nDiv = document.createElement('div');
-                nDiv.innerHTML = obj.pseudo + " dit : " + obj.message;
-                document.body.appendChild(nDiv);
-
-            }
-
-        };
-
-        xhttp.open("GET", "affichageMessages.php", true);
-
-        xhttp.send();
-
-        retourAjax();
-
-    }, 2000)
-
-}
-
-//document.getElementById('recevoir').addEventListener('click', retourAjax);
-
-window.onload = retourAjax();

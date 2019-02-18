@@ -9,23 +9,32 @@
 include "connection.php";
 
 
-    $pseudo = (isset($_GET["pseudo"])) ? $_GET["pseudo"] : NULL;
-    $message = (isset($_GET["message"])) ? $_GET["message"] : NULL;
+//if(isset($_POST['submit'])){ // si on a envoyé des données avec le formulaire
 
-    $traitPseudo = htmlentities($pseudo);
-    $traitMessage = htmlentities($message);
+   // if(!empty($_POST['pseudo']) AND !empty($_POST['message'])) { // si les variables ne sont pas vides
+
+        $pseudo = htmlentities($_POST['pseudo']);
+        $message = htmlentities($_POST['message']); // on sécurise nos données
 
 
-$ajoutEl = "INSERT INTO `chat` (`pseudo`, `message`) VALUES (?, ?)";
+        $ajoutEl = "INSERT INTO `chat` (`pseudo`, `message`) VALUES (?, ?)";
 
-$connection = $conn->prepare($ajoutEl);
+        $connection = $conn->prepare($ajoutEl);
 
-$connection->bind_param('ss', $traitPseudo, $traitMessage);
+        $connection->bind_param('ss', $pseudo, $message);
 
-$connection->execute();
+        $connection->execute();
 
-$connection->close();
+        $connection->close();
 
+  //  }
+
+  //  else  {
+
+      //  echo "Un des champs n'est pas rempli";
+  //  }
+
+//}
 
 
 

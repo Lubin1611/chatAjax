@@ -5,8 +5,8 @@
  * Date: 25/01/2019
  * Time: 11:29
  */
-include "connection.php";
 
+include "connection.php";
 
 ?>
 <!DOCTYPE html>
@@ -14,7 +14,7 @@ include "connection.php";
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="lib/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -23,16 +23,28 @@ include "connection.php";
 <form action="" method="post">
     <label>Votre pseudo : </label><input id = 'pseudo' name="pseudo"><br>
     <label>Votre message : </label><textarea id = "message" name="message"></textarea>
-    <input type="button" id = "envoyez" value="envoyez">
-    <input type="button" id = "recevoir" value="recevoir">
+    <input type="submit" name="submit" id = "envoyez" value="envoyez">
+
 </form>
 
 <div id = 'tchat'>
 
+<?php
+
+$tout = "SELECT * from `chat` ORDER BY id DESC LIMIT 0,10";
+
+$result = $conn->query($tout);
+
+while ($row = $result->fetch_assoc()) {
+
+    echo "<p id=\"" . $row['id'] . "\">" . $row['pseudo'] . " dit : " . $row['message'] . "</p>";
+
+}
+?>
+
 
 </div>
-
-
-<script src="appelAjax.js"></script>
+<script type="text/javascript" src="charger.js"></script>
+<script type="text/javascript" src="appelAjax.js"></script>
 </body>
 </html>
