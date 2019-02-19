@@ -5,19 +5,20 @@
  * Date: 18/02/2019
  * Time: 13:42
  */
-include "connection.php";
+include "RequetesPhp/connection.php";
 
 
 if (!empty($_POST['pseudo']) AND !empty($_POST['mdp'])) {
 
     $pseudo = $_POST['pseudo'];
-    $password = $_POST['mdp'];
+    $password = sha1($_POST['mdp']);
+    $connect = '0';
 
-    $inscription = "INSERT INTO `user_chat` (`pseudo`, `mdp`) VALUES (?, ?)";
+    $inscription = "INSERT INTO `user_chat` (`pseudo`, `mdp`, `connected`) VALUES (?, ?, ?)";
 
     $envoiIn = $conn->prepare($inscription);
 
-    $envoiIn->bind_param('ss', $pseudo, $password);
+    $envoiIn->bind_param('ssi', $pseudo, $password, $connect);
 
     $envoiIn->execute();
 
@@ -38,7 +39,7 @@ if (!empty($_POST['pseudo']) AND !empty($_POST['mdp'])) {
 
 <form action="" method="post">
     <label>Indiquez un pseudo : </label><input type ="text" name="pseudo" id="pseudo">
-    <labem>Indiquez un mot de passe : </labem><input type="password" name="mdp" id ="mdp">
+    <label>Indiquez un mot de passe : </label><input type="password" name="mdp" id ="mdp">
     <input type="submit" value="envoyez">
 </form>
 

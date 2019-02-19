@@ -5,7 +5,7 @@
  * Date: 18/02/2019
  * Time: 13:54
  */
-include "connection.php";
+include "RequetesPhp/connection.php";
 
 
 $login = (isset($_POST['pseudoConn']) ? $_POST['pseudoConn'] : NULL);
@@ -28,7 +28,16 @@ if (isset($_POST['pseudoConn']) and isset($_POST['mdpConn'])) {
         session_start();
 
         $_SESSION['login'] = $row['pseudo'];
+        $_SESSION['id'] = $row['id_pseudo'];
         header('Location:formulaire.php');
+
+        $var = $_SESSION['id'];
+
+        /********** On update le statut de connecté ***************/
+
+        $update = "UPDATE `user_chat` set `connected` = '1' WHERE `id_pseudo`= $var";
+
+        $conn->query($update);
 
     }
     if ($_POST['pseudoConn'] != $login and $_POST['mdpConn'] != $password) {
@@ -42,9 +51,8 @@ if (isset($_POST['pseudoConn']) and isset($_POST['mdpConn'])) {
 
 <form action="" method="post">
     <label>Votre pseudo : </label><input type="text" name="pseudoConn" id="pseudo">
-    <label>Votre mot de passe :</label>
-    <input type="password" name="mdpConn" id="mdp">
+    <label>Votre mot de passe :</label><input type="password" name="mdpConn" id="mdp">
     <input type="submit" value="envoyez">
 </form>
 
-<p>Pas encore inscrit ? <a href="index.php">Cliquez ici pour vous inscrire</a></p>
+<p>Pas encore inscrit ? <a href="inscription.php">Cliquez ici pour vous inscrire</a></p>

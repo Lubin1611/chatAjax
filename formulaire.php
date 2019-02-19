@@ -6,7 +6,7 @@
  * Time: 11:29
  */
 
-include "connection.php";
+include "RequetesPhp/connection.php";
 
 ?>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@ include "connection.php";
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -44,21 +44,33 @@ while ($row = $result->fetch_assoc()) {
 
 <div id = 'membres'>
 <p>Membres connectés</p>
+<?php
 
+$selectConn = "SELECT * FROM `user_chat` WHERE `connected` = '1'";
 
+$result = $conn->query($selectConn);
+
+while ($col = $result->fetch_assoc()) {
+
+    echo "<p>". $col['pseudo'] ."</p>";
+}
+
+    ?>
 </div>
 
 </div>
 
 <form action="" method="post">
     <label>Votre message : </label><textarea id = "message" name="message"></textarea>
+    <div id = "inputsChat">
     <input type="submit" name="submit" id = "envoyez" value="envoyez">
-
+         <a href="RequetesPhp/logout.php">Se déconnecter</a>;
+    </div>
 </form>
 
 </div>
 
-<script type="text/javascript" src="charger.js"></script>
-<script type="text/javascript" src="appelAjax.js"></script>
+<script type="text/javascript" src="Ajax/charger.js"></script>
+<script type="text/javascript" src="Ajax/appelAjax.js"></script>
 </body>
 </html>
